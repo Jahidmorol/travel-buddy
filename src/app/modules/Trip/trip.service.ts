@@ -1,23 +1,10 @@
-import { Secret } from "jsonwebtoken";
-import bcrypt from "bcrypt";
-import config from "../../../config";
-import { jwtHelpers } from "../../../helpers/jwtHelpers";
+import { TravelStatus } from "@prisma/client";
 import { prisma } from "../../../shared/prisma";
 
-const createTrip = async (token: string, payload: any) => {
-  let decodedData;
-  try {
-    decodedData = jwtHelpers.verifyToken(
-      token,
-      config.jwt.jwt_secret as Secret
-    );
-  } catch (err) {
-    throw new Error("You are not authrized!");
-  }
-
-  const user = await prisma.user.findUniqueOrThrow({
+const createTrip = async (user: any, payload: any) => {
+  const userData = await prisma.user.findUniqueOrThrow({
     where: {
-      id: decodedData.id,
+      id: user.id,
     },
   });
 
@@ -28,14 +15,38 @@ const createTrip = async (token: string, payload: any) => {
       endDate: payload.endDate,
       activities: payload.activities,
       budget: payload.budget,
-      userId: decodedData.id,
+      userId: user.id,
     },
   });
-  console.log(createTrip);
+
+  return createTrip;
+};
+
+const travelBuddyRequest = async (user: any, tripId: string, payload: any) => {
+  const userData = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: user.id,
+    },
+  });
+
+  const tripData = await prisma.trip.findUniqueOrThrow({
+    where: {
+      id: tripId,
+    },
+  });
+
+  const createTrip = await prisma.travelBuddyRequest.create({
+    data: {
+      tripId,
+      userId: user.id,
+      status: TravelStatus.PENDING,
+    },
+  });
 
   return createTrip;
 };
 
 export const tripService = {
   createTrip,
+  travelBuddyRequest,
 };
