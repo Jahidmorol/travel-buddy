@@ -38,13 +38,13 @@ const loginUser = async (payload: { email: string; password: string }) => {
     config.jwt.refresh_token_secret as Secret,
     config.jwt.refresh_token_expires_in as string
   );
-
   return {
     accessToken,
     user,
     refreshToken,
   };
 };
+
 const UserProfile = async (payload: any) => {
   const user = await prisma.user.findUniqueOrThrow({
     where: {
@@ -62,7 +62,34 @@ const UserProfile = async (payload: any) => {
   return user;
 };
 
+const UserProfileEdit = async (user: any, payload: any) => {
+  console.log(payload);
+
+  const userData = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: user.id,
+    },
+  });
+
+  const userUpdateData = await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: payload,
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  return userUpdateData;
+};
+
 export const AuthService = {
   loginUser,
   UserProfile,
+  UserProfileEdit,
 };

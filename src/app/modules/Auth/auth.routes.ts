@@ -9,4 +9,6 @@ router.post("/login", AuthController.loginUser);
 
 router.get("/profile", auth(UserRole.USER), AuthController.UserProfile);
 
+router.put("/profile", auth(UserRole.USER), AuthController.UserProfileEdit);
+
 export const authRouter = router;
