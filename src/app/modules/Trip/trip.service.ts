@@ -45,6 +45,7 @@ const travelBuddyRequest = async (user: any, tripId: string, payload: any) => {
 
   return createTrip;
 };
+
 const travelBuddyGet = async (user: any, tripId: string) => {
   const userData = await prisma.user.findUniqueOrThrow({
     where: {
@@ -63,9 +64,32 @@ const travelBuddyGet = async (user: any, tripId: string) => {
 
   return tripBuddyData;
 };
+const travelBuddyRespond = async (user: any, buddyId: string, data: any) => {
+  const userData = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: user.id,
+    },
+  });
+
+  const tripBuddyData = await prisma.travelBuddyRequest.findUniqueOrThrow({
+    where: {
+      id: buddyId,
+    },
+  });
+
+  const tripBuddyUpdateData = await prisma.travelBuddyRequest.update({
+    where: {
+      id: buddyId,
+    },
+    data,
+  });
+
+  return tripBuddyUpdateData;
+};
 
 export const tripService = {
   createTrip,
   travelBuddyRequest,
   travelBuddyGet,
+  travelBuddyRespond,
 };

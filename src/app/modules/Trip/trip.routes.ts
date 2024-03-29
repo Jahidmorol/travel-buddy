@@ -21,7 +21,7 @@ router.get(
 router.put(
   "/travel-buddies/:buddyId/respond",
   auth(UserRole.USER),
-  tripController.travelBuddyRequest
+  tripController.travelBuddyRespond
 );
 
 export const tripRouter = router;

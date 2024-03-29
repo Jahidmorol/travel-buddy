@@ -45,14 +45,34 @@ const travelBuddyGet = catchAsync(
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
-      message: "Travel buddy request sent successfully",
+      message: "Potential travel buddies retrieved successfully",
       data: result,
     });
   }
 );
 
+const travelBuddyRespond = catchAsync(
+  async (req: Request & { user?: any }, res: Response) => {
+    const user = req.user;
+    const { buddyId } = req.params;
+
+    const result = await tripService.travelBuddyRespond(
+      user,
+      buddyId,
+      req.body
+    );
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Travel buddy request responded successfully",
+      data: result,
+    });
+  }
+);
 export const tripController = {
   createTrip,
   travelBuddyRequest,
   travelBuddyGet,
+  travelBuddyRespond,
 };
