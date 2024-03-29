@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
   res.send("Travel buddy matching srver is running!!");
 });
 
-app.use("/api/v1", router);
+app.use("/api", router);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.status(httpStatus.NOT_FOUND).json({
