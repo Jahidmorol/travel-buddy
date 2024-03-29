@@ -1,12 +1,10 @@
-import express from "express";
+import { Server } from "http";
+import app from "./app";
+import config from "./config";
 
-const app = express();
-const port = 3000;
-
-app.get("/", (req, res) => {
-  res.send("Hello World in my world!");
-});
-
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+async function main() {
+  const server: Server = app.listen(config.port, () => {
+    console.log("Server is running on port", config.port);
+  });
+}
+main();
