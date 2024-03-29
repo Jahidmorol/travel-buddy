@@ -45,8 +45,27 @@ const travelBuddyRequest = async (user: any, tripId: string, payload: any) => {
 
   return createTrip;
 };
+const travelBuddyGet = async (user: any, tripId: string) => {
+  const userData = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: user.id,
+    },
+  });
+
+  const tripBuddyData = await prisma.travelBuddyRequest.findUniqueOrThrow({
+    where: {
+      id: tripId,
+    },
+    include: {
+      user: true,
+    },
+  });
+
+  return tripBuddyData;
+};
 
 export const tripService = {
   createTrip,
   travelBuddyRequest,
+  travelBuddyGet,
 };

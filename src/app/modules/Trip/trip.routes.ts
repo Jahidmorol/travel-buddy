@@ -12,4 +12,16 @@ router.post(
   tripController.travelBuddyRequest
 );
 
+router.get(
+  "/travel-buddies/:tripId",
+  auth(UserRole.USER),
+  tripController.travelBuddyGet
+);
+
+router.put(
+  "/travel-buddies/:buddyId/respond",
+  auth(UserRole.USER),
+  tripController.travelBuddyRequest
+);
+
 export const tripRouter = router;

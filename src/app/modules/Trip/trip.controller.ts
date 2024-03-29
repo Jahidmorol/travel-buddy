@@ -35,7 +35,24 @@ const travelBuddyRequest = catchAsync(
   }
 );
 
+const travelBuddyGet = catchAsync(
+  async (req: Request & { user?: any }, res: Response) => {
+    const user = req.user;
+    const { tripId } = req.params;
+
+    const result = await tripService.travelBuddyGet(user, tripId);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Travel buddy request sent successfully",
+      data: result,
+    });
+  }
+);
+
 export const tripController = {
   createTrip,
   travelBuddyRequest,
+  travelBuddyGet,
 };
