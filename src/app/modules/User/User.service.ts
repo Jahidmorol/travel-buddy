@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import { prisma } from "../../../shared/prisma";
+
 const createUserIntoDB = async (payload: any) => {
   const hashedPassword: string = await bcrypt.hash(payload.password, 12);
 

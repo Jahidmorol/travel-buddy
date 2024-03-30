@@ -53,17 +53,38 @@ const travelBuddyGet = async (user: any, tripId: string) => {
     },
   });
 
-  const tripBuddyData = await prisma.travelBuddyRequest.findUniqueOrThrow({
+  // const tripData = await prisma.trip.findUniqueOrThrow({
+  //   where: {
+  //     id: tripId,
+  //   },
+  // });
+
+  // console.log(tripData);
+
+  const tripBuddyData = await prisma.travelBuddyRequest.findMany({
     where: {
-      id: tripId,
+      tripId,
     },
-    include: {
-      user: true,
+    select: {
+      id: true,
+      tripId: true,
+      userId: true,
+      status: true,
+      createdAt: true,
+      updatedAt: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
     },
   });
 
   return tripBuddyData;
 };
+
 const travelBuddyRespond = async (user: any, buddyId: string, data: any) => {
   const userData = await prisma.user.findUniqueOrThrow({
     where: {
