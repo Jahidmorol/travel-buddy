@@ -8,14 +8,14 @@ import { Prisma, TravelStatus } from "../../../../prisma/generated/client";
 const getAllFromDB = async (
   params: ITripFilterRequest,
   options: IPaginationOptions,
-  user: any
+  filtersbudget: any
 ) => {
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelper.calculatePagination(options);
+
   const andCondions: Prisma.TripWhereInput[] = [];
 
   const { searchTerm, ...filterData } = params;
-  console.log(params);
 
   if (params.searchTerm) {
     andCondions.push({
@@ -35,6 +35,27 @@ const getAllFromDB = async (
           equals: (filterData as any)[key],
         },
       })),
+    });
+  }
+
+  if (
+    filtersbudget.minBudget !== undefined &&
+    filtersbudget.maxBudget !== undefined
+  ) {
+    andCondions.push({
+      AND: [
+        {
+          budget: {
+            gte: parseInt(filtersbudget.minBudget),
+          },
+        },
+
+        {
+          budget: {
+            lte: parseInt(filtersbudget.maxBudget),
+          },
+        },
+      ],
     });
   }
 

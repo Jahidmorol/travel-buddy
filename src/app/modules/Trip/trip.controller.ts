@@ -21,23 +21,26 @@ const createTrip = catchAsync(
   }
 );
 
-const getAllFromDB = catchAsync(
-  async (req: Request & { user?: any }, res: Response) => {
-    const user = req.user;
-    const filters = pick(req.query, tripFilterAbleFieds);
+const getAllFromDB = catchAsync(async (req, res) => {
+  const filters = pick(req.query, tripFilterAbleFieds);
 
-    const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
+  const filtersbudget = pick(req.query, ["minBudget", "maxBudget"]);
 
-    const result = await tripService.getAllFromDB(filters, options, user);
+  const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
 
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: "Trips retrieved successfully",
-      data: result,
-    });
-  }
-);
+  const result = await tripService.getAllFromDB(
+    filters,
+    options,
+    filtersbudget
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Trips retrieved successfully",
+    data: result,
+  });
+});
 
 const travelBuddyRequest = catchAsync(
   async (req: Request & { user?: any }, res: Response) => {
