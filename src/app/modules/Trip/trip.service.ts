@@ -1,6 +1,71 @@
-import { TravelStatus } from "@prisma/client";
+import { Prisma, TravelStatus } from "@prisma/client";
 import { prisma } from "../../../shared/prisma";
+import { paginationHelper } from "../../../helpers/paginationHelper";
+import { ITripFilterRequest } from "./trip.interface";
+import { IPaginationOptions } from "../../interfaces/pagination";
+import { tripSearchAbleFields } from "./trip.constant";
 
+const getAllFromDB = async (
+  params: ITripFilterRequest,
+  options: IPaginationOptions,
+  user: any
+) => {
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelper.calculatePagination(options);
+  const andCondions: Prisma.TripWhereInput[] = [];
+
+  const { searchTerm, ...filterData } = params;
+
+  if (params.searchTerm) {
+    andCondions.push({
+      OR: tripSearchAbleFields?.map((field) => ({
+        [field]: {
+          contains: params.searchTerm,
+          mode: "insensitive",
+        },
+      })),
+    });
+  }
+
+  if (Object.keys(filterData).length > 0) {
+    andCondions.push({
+      AND: Object.keys(filterData).map((key) => ({
+        [key]: {
+          equals: (filterData as any)[key],
+        },
+      })),
+    });
+  }
+
+  const whereConditon: Prisma.TripWhereInput = { AND: andCondions };
+
+  const result = await prisma.trip.findMany({
+    where: whereConditon,
+    skip,
+    take: limit,
+    orderBy:
+      sortBy && sortOrder
+        ? {
+            [sortBy]: sortOrder,
+          }
+        : {
+            createdAt: "desc",
+          },
+  });
+
+  const total = await prisma.trip.count({
+    where: whereConditon,
+  });
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  };
+};
 const createTrip = async (user: any, payload: any) => {
   const userData = await prisma.user.findUniqueOrThrow({
     where: {
@@ -112,5 +177,6 @@ export const tripService = {
   createTrip,
   travelBuddyRequest,
   travelBuddyGet,
+  getAllFromDB,
   travelBuddyRespond,
 };
