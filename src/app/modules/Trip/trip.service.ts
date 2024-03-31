@@ -1,9 +1,9 @@
-import { Prisma, TravelStatus } from "@prisma/client";
 import { prisma } from "../../../shared/prisma";
 import { paginationHelper } from "../../../helpers/paginationHelper";
 import { ITripFilterRequest } from "./trip.interface";
 import { IPaginationOptions } from "../../interfaces/pagination";
 import { tripSearchAbleFields } from "./trip.constant";
+import { Prisma, TravelStatus } from "../../../../prisma/generated/client";
 
 const getAllFromDB = async (
   params: ITripFilterRequest,
@@ -15,6 +15,7 @@ const getAllFromDB = async (
   const andCondions: Prisma.TripWhereInput[] = [];
 
   const { searchTerm, ...filterData } = params;
+  console.log(params);
 
   if (params.searchTerm) {
     andCondions.push({
