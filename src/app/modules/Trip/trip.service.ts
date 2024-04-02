@@ -173,8 +173,6 @@ const travelBuddyGet = async (user: any, tripId: string) => {
 };
 
 const travelBuddyRespond = async (user: any, buddyId: string, data: any) => {
-  console.log(data);
-  console.log(buddyId);
   const userData = await prisma.user.findUniqueOrThrow({
     where: {
       id: user.id,

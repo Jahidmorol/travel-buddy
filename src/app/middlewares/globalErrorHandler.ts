@@ -28,11 +28,9 @@ const globalErrorHandler = (
     };
   } else if (err instanceof Error) {
     message = err.message;
-    message = "Unauthorized Access";
-    statusCode = 401;
     errorDetails = {
       error: err.message,
-      statusCode: 401,
+      statusCode,
       stack: err.stack,
     };
   }
