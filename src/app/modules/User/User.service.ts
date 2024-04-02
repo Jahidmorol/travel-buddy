@@ -21,7 +21,7 @@ const createUserIntoDB = async (payload: any) => {
         updatedAt: true,
       },
     });
-    const createUserProfile = await transactionClient.userProfile.create({
+    await transactionClient.userProfile.create({
       data: {
         age: payload.age,
         bio: payload.bio,
