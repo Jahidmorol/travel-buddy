@@ -65,7 +65,7 @@ const UserProfile = async (payload: any) => {
 const UserProfileEdit = async (user: any, payload: any) => {
   console.log(payload);
 
-  const userData = await prisma.user.findUniqueOrThrow({
+  await prisma.user.findUniqueOrThrow({
     where: {
       id: user.id,
     },

@@ -89,7 +89,7 @@ const getAllFromDB = async (
   };
 };
 const createTrip = async (user: any, payload: any) => {
-  const userData = await prisma.user.findUniqueOrThrow({
+  await prisma.user.findUniqueOrThrow({
     where: {
       id: user.id,
     },
@@ -110,13 +110,13 @@ const createTrip = async (user: any, payload: any) => {
 };
 
 const travelBuddyRequest = async (user: any, tripId: string, payload: any) => {
-  const userData = await prisma.user.findUniqueOrThrow({
+  await prisma.user.findUniqueOrThrow({
     where: {
       id: user.id,
     },
   });
 
-  const tripData = await prisma.trip.findUniqueOrThrow({
+  await prisma.trip.findUniqueOrThrow({
     where: {
       id: tripId,
     },
@@ -173,13 +173,13 @@ const travelBuddyGet = async (user: any, tripId: string) => {
 };
 
 const travelBuddyRespond = async (user: any, buddyId: string, data: any) => {
-  const userData = await prisma.user.findUniqueOrThrow({
+  await prisma.user.findUniqueOrThrow({
     where: {
       id: user.id,
     },
   });
 
-  const tripBuddyData = await prisma.travelBuddyRequest.findUniqueOrThrow({
+  await prisma.travelBuddyRequest.findUniqueOrThrow({
     where: { id: buddyId },
   });
 
