@@ -51,67 +51,79 @@ The Travel Buddy Matching Application is a web service that allows users to find
    npm run dev
    ```
 
-then access the API, make requests to `http://localhost:5000` your local server.
+then access the API, make requests to `http://localhost:3000` your local server.
 
 # API Endpoints
 
-### Create new user
+### User Registration
 
 - **Method:** `POST`
-- **URL:** `http://localhost:5000/api/auth/register`
-- **Description:** Create new user
+- **URL:** `http://localhost:3000/api/register`
+- **Description:** User Registration
 
-### Login user
-
-- **Method:** `POST`
-- **URL:** `http://localhost:5000/api/auth/login`
-- **Description:** Login user
-
-# Create Glass
-
-### Create a Glass
+### User Login
 
 - **Method:** `POST`
-- **URL:** `http://localhost:5000/api/glass/add-glass`
-- **Description:** Create a Glass
+- **URL:** `http://localhost:3000/api/login`
+- **Description:** User Login
 
-### Get All Glass
+# Create a Trip
+
+### Create a trips
+
+- **Method:** `POST`
+- **URL:** `http://localhost:3000/api/trips`
+- **Description:** Create a trips
+
+### Get Paginated and Filtered Trips
 
 - **Method:** `GET`
-- **URL:** `http://localhost:5000/api/glass`
-- **Description:** Get all glass
+- **URL:** `http://localhost:3000/api/trips`
 
-### Update a Glass
+  - `destination`: (Optional) Filter trips by destination.
+  - `startDate`: (Optional) Filter trips by start date.
+  - `endDate`: (Optional) Filter trips by end date.
+  - `budget`: (Optional) Filter trips by budget range. Example: ?minBudget=100&maxBudget=10000
+  - `searchTerm`: (Optional) Searches for trips based on a keyword or phrase. Only applicable to the following fields: `destination`, `budget`, etc.
+  - `page`: (Optional) Specifies the page number for paginated results. Default is 1. Example: ?page=2
+  - `limit`: (Optional) Sets the number of data per page. Default is 10. Example: ?limit=5
+  - `sortBy`: (Optional) Specifies the field by which the results should be sorted. Only applicable to the following fields: `destination`, `budget`. Example: ?sortBy=budget
+  - `sortOrder`: (Optional) Determines the sorting order, either 'asc' (ascending) or 'desc' (descending). Example: ?sortOrder=desc
+
+### Send Travel Buddy Request
 
 - **Method:** `POST`
-- **URL:** `http://localhost:5000/api/glass/:id`
-- **Description:** update a Glass
+- **URL:** `http://localhost:3000/api/trip/:tripId/request`
+- **Request Headers:**
+  - `Authorization: <JWT_TOKEN>`
 
-### Delete a Glass
+### Get Potential Travel Buddies For a Specific Trip
 
-- **Method:** `DELETE`
-- **URL:** `http://localhost:5000/api/glass/:id`
-- **Description:** Delete a Glass
+- **Method:** `GET`
+- **URL:** `http://localhost:3000/api/travel-buddies/:tripId`
+- **Request Headers:**
+  - `Authorization: <JWT_TOKEN>`
 
-### Delete the Glasses
+### Respond to Travel Buddy Request
 
 - **Method:** `PUT`
-- **URL:** `http://localhost:5000/api/glass/delete-many-glass`
-- **Description:** Delete the Glasses
+- **URL:** `http://localhost:3000/api/travel-buddies/:buddyId/respond`
+- **Request Headers:**
+  - `Authorization: <JWT_TOKEN>`
 
-# Create Sales History
-
-### Create a Sales
-
-- **Method:** `POST`
-- **URL:** `http://localhost:5000/api/sell/add-sell-history`
-- **Description:** create a sales
-
-### Get all Sales
+### Get User Profile
 
 - **Method:** `GET`
-- **URL:** `http://localhost:5000/api/sell`
-- **Description:** Get all Sales
+- **URL:** `http://localhost:3000/api/profile`
+- **Request Headers:**
+  - `Authorization: <JWT_TOKEN>`
+
+### Update User Profile
+
+- **Method:** `PUT`
+- **URL:** `http://localhost:3000/api/profile`
+- **Request Headers:**
+  - `Authorization: <JWT_TOKEN>`
 
 # Contributing
 
