@@ -46,6 +46,12 @@ const UserProfile = async (payload: any) => {
       email: true,
       createdAt: true,
       updatedAt: true,
+      userProfile: {
+        select: {
+          age: true,
+          bio: true,
+        },
+      },
     },
   });
 
@@ -53,8 +59,6 @@ const UserProfile = async (payload: any) => {
 };
 
 const UserProfileEdit = async (user: any, payload: any) => {
-  console.log(payload);
-
   await prisma.user.findUniqueOrThrow({
     where: {
       id: user.id,

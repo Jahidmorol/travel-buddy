@@ -13,8 +13,16 @@ router.post(
   AuthController.loginUser
 );
 
-router.get("/profile", auth(UserRole.USER), AuthController.UserProfile);
+router.get(
+  "/profile",
+  auth(UserRole.USER, UserRole.ADMIN),
+  AuthController.UserProfile
+);
 
-router.put("/profile", auth(UserRole.USER), AuthController.UserProfileEdit);
+router.put(
+  "/profile",
+  auth(UserRole.USER, UserRole.ADMIN),
+  AuthController.UserProfileEdit
+);
 
 export const authRouter = router;
