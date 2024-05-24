@@ -164,7 +164,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "E:\\DDrive\\Level-2\\Full-Stack\\Assignment-8\\prisma\\generated\\client",
+      "value": "E:\\DDrive\\Level-2\\Full-Stack\\Assignment-9\\trave-buddy-server\\prisma\\generated\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -191,7 +191,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
