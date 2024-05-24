@@ -29,19 +29,9 @@ const loginUser = async (payload: { email: string; password: string }) => {
     config.jwt.expires_in as string
   );
 
-  const refreshToken = jwtHelpers.generateToken(
-    {
-      id: user.id,
-      role: user.role,
-    },
-
-    config.jwt.refresh_token_secret as Secret,
-    config.jwt.refresh_token_expires_in as string
-  );
   return {
     accessToken,
     user,
-    refreshToken,
   };
 };
 

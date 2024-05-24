@@ -39,7 +39,8 @@ export type TravelBuddyRequest = $Result.DefaultSelection<Prisma.$TravelBuddyReq
  */
 export namespace $Enums {
   export const UserRole: {
-  USER: 'USER'
+  USER: 'USER',
+  ADMIN: 'ADMIN'
 };
 
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]

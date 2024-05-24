@@ -169,7 +169,8 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 exports.UserRole = exports.$Enums.UserRole = {
-  USER: 'USER'
+  USER: 'USER',
+  ADMIN: 'ADMIN'
 };
 
 exports.TravelStatus = exports.$Enums.TravelStatus = {
