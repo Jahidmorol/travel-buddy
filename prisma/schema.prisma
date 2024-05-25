@@ -23,24 +23,10 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  userProfile        UserProfile?
   Trip               Trip[]
   travelBuddyRequest TravelBuddyRequest[]
 
   @@map("users")
-}
-
-model UserProfile {
-  id     String @id @default(uuid())
-  bio    String
-  age    Int
-  userId String @unique
-  user   User   @relation(fields: [userId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("userprofile")
 }
 
 model Trip {

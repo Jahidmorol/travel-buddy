@@ -46,12 +46,6 @@ const UserProfile = async (payload: any) => {
       email: true,
       createdAt: true,
       updatedAt: true,
-      userProfile: {
-        select: {
-          age: true,
-          bio: true,
-        },
-      },
     },
   });
 

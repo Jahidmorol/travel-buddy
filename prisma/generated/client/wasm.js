@@ -129,15 +129,6 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
-exports.Prisma.UserProfileScalarFieldEnum = {
-  id: 'id',
-  bio: 'bio',
-  age: 'age',
-  userId: 'userId',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
 exports.Prisma.TripScalarFieldEnum = {
   id: 'id',
   destination: 'destination',
@@ -181,7 +172,6 @@ exports.TravelStatus = exports.$Enums.TravelStatus = {
 
 exports.Prisma.ModelName = {
   User: 'User',
-  UserProfile: 'UserProfile',
   Trip: 'Trip',
   TravelBuddyRequest: 'TravelBuddyRequest'
 };

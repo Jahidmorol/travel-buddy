@@ -23,12 +23,6 @@ const seedSuperAdmin = async () => {
         password: hashedPassword,
         role: UserRole.ADMIN,
         name: "Admin",
-        userProfile: {
-          create: {
-            age: 24,
-            bio: "is admin",
-          },
-        },
       },
     });
 

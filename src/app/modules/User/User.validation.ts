@@ -11,8 +11,6 @@ const createUserValidation = z.object({
     password: z.string({
       required_error: "Password is required!",
     }),
-    bio: z.string().optional(),
-    age: z.number().optional(),
   }),
 });
 
