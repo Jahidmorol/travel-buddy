@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import config from "../../../config";
 import { jwtHelpers } from "../../../helpers/jwtHelpers";
 import { prisma } from "../../../shared/prisma";
+import ApiError from "../../errors/ApiError";
 
 const loginUser = async (payload: { email: string; password: string }) => {
   const user = await prisma.user.findUniqueOrThrow({
@@ -76,8 +77,49 @@ const UserProfileEdit = async (user: any, payload: any) => {
   return userUpdateData;
 };
 
+const changePassword = async (user: any, payload: any) => {
+  console.log(user);
+  console.log(payload);
+  const userData = await prisma.user.findFirst({
+    where: {
+      id: user.id,
+    },
+  });
+
+  console.log(userData);
+
+  if (!userData) {
+    throw new ApiError(406, "User not found!");
+  }
+
+  const isCorrectPassword = await bcrypt.compare(
+    payload.oldPassword,
+    userData.password
+  );
+
+  if (!isCorrectPassword) {
+    throw new ApiError(406, "Password not match!");
+  }
+
+  const hashedPassword: string = await bcrypt.hash(payload.password, 12);
+
+  await prisma.user.update({
+    where: {
+      email: userData.email,
+    },
+    data: {
+      password: hashedPassword,
+    },
+  });
+
+  return {
+    message: "Change password",
+  };
+};
+
 export const AuthService = {
   loginUser,
   UserProfile,
+  changePassword,
   UserProfileEdit,
 };

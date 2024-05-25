@@ -25,4 +25,11 @@ router.put(
   AuthController.UserProfileEdit
 );
 
+router.post(
+  "/change-password",
+  validationRequest(userValidation.changeUserPasswordValidation),
+  auth(UserRole.ADMIN, UserRole.USER),
+  AuthController.changePassword
+);
+
 export const authRouter = router;
