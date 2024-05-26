@@ -78,15 +78,11 @@ const UserProfileEdit = async (user: any, payload: any) => {
 };
 
 const changePassword = async (user: any, payload: any) => {
-  console.log(user);
-  console.log(payload);
   const userData = await prisma.user.findFirst({
     where: {
       id: user.id,
     },
   });
-
-  console.log(userData);
 
   if (!userData) {
     throw new ApiError(406, "User not found!");

@@ -22,4 +22,11 @@ router.patch(
   userController.updateUserInfo
 );
 
+router.patch(
+  "/update-user-role/:id",
+  auth(UserRole.ADMIN),
+  validationRequest(userValidation.userRoleUpdateValidation),
+  userController.updateUserInfo
+);
+
 export const userRoute = router;

@@ -51,10 +51,19 @@ const userIsActiveValidation = z.object({
   }),
 });
 
+const userRoleUpdateValidation = z.object({
+  body: z.object({
+    role: z.enum(["ADMIN", "USER"], {
+      required_error: "Provide User Role ADMIN, Or USER!",
+    }),
+  }),
+});
+
 export const userValidation = {
   createUserValidation,
   loginUserValidation,
   updateUserValidation,
   changeUserPasswordValidation,
   userIsActiveValidation,
+  userRoleUpdateValidation,
 };
