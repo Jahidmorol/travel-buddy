@@ -42,6 +42,33 @@ const createUserIntoDB = async (payload: any) => {
   return result;
 };
 
+const getAllUser = async (user: any) => {
+  const adminDetails = await prisma.user.findFirst({
+    where: {
+      id: user?.id,
+      role: user?.role,
+    },
+  });
+
+  if (!adminDetails) {
+    throw new ApiError(404, "Admin is not found!");
+  }
+
+  const result = await prisma.user.findMany({
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      isActive: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+  return result;
+};
+
 export const userService = {
   createUserIntoDB,
+  getAllUser,
 };

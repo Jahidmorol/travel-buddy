@@ -14,10 +14,13 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+
 app.use(cookiParser());
 
 app.get("/", (req, res) => {
-  res.send("Travel buddy matching srver is running!!");
+  res.send("Travel buddy matching server is running!!");
 });
 
 app.use("/api", router);

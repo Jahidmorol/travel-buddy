@@ -15,13 +15,14 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
+  id        String     @id @default(uuid())
   name      String
-  email     String   @unique
+  email     String     @unique
   password  String
-  role      UserRole @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  role      UserRole   @default(USER)
+  createdAt DateTime   @default(now())
+  isActive  UserActive @default(ACTIVATE)
+  updatedAt DateTime   @updatedAt
 
   Trip               Trip[]
   travelBuddyRequest TravelBuddyRequest[]
@@ -70,4 +71,9 @@ enum TravelStatus {
 enum UserRole {
   USER
   ADMIN
+}
+
+enum UserActive {
+  ACTIVATE
+  DEACTIVATE
 }

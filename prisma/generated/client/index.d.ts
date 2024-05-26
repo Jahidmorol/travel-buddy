@@ -41,6 +41,14 @@ export namespace $Enums {
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
+export const UserActive: {
+  ACTIVATE: 'ACTIVATE',
+  DEACTIVATE: 'DEACTIVATE'
+};
+
+export type UserActive = (typeof UserActive)[keyof typeof UserActive]
+
+
 export const TravelStatus: {
   PENDING: 'PENDING',
   APPROVED: 'APPROVED',
@@ -54,6 +62,10 @@ export type TravelStatus = (typeof TravelStatus)[keyof typeof TravelStatus]
 export type UserRole = $Enums.UserRole
 
 export const UserRole: typeof $Enums.UserRole
+
+export type UserActive = $Enums.UserActive
+
+export const UserActive: typeof $Enums.UserActive
 
 export type TravelStatus = $Enums.TravelStatus
 
@@ -1154,6 +1166,7 @@ export namespace Prisma {
     password: string | null
     role: $Enums.UserRole | null
     createdAt: Date | null
+    isActive: $Enums.UserActive | null
     updatedAt: Date | null
   }
 
@@ -1164,6 +1177,7 @@ export namespace Prisma {
     password: string | null
     role: $Enums.UserRole | null
     createdAt: Date | null
+    isActive: $Enums.UserActive | null
     updatedAt: Date | null
   }
 
@@ -1174,6 +1188,7 @@ export namespace Prisma {
     password: number
     role: number
     createdAt: number
+    isActive: number
     updatedAt: number
     _all: number
   }
@@ -1186,6 +1201,7 @@ export namespace Prisma {
     password?: true
     role?: true
     createdAt?: true
+    isActive?: true
     updatedAt?: true
   }
 
@@ -1196,6 +1212,7 @@ export namespace Prisma {
     password?: true
     role?: true
     createdAt?: true
+    isActive?: true
     updatedAt?: true
   }
 
@@ -1206,6 +1223,7 @@ export namespace Prisma {
     password?: true
     role?: true
     createdAt?: true
+    isActive?: true
     updatedAt?: true
     _all?: true
   }
@@ -1289,6 +1307,7 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRole
     createdAt: Date
+    isActive: $Enums.UserActive
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
@@ -1316,6 +1335,7 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     createdAt?: boolean
+    isActive?: boolean
     updatedAt?: boolean
     Trip?: boolean | User$TripArgs<ExtArgs>
     travelBuddyRequest?: boolean | User$travelBuddyRequestArgs<ExtArgs>
@@ -1329,6 +1349,7 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     createdAt?: boolean
+    isActive?: boolean
     updatedAt?: boolean
   }
 
@@ -1352,6 +1373,7 @@ export namespace Prisma {
       password: string
       role: $Enums.UserRole
       createdAt: Date
+      isActive: $Enums.UserActive
       updatedAt: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
@@ -1756,6 +1778,7 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'UserRole'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
+    readonly isActive: FieldRef<"User", 'UserActive'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
   }
     
@@ -4101,6 +4124,7 @@ export namespace Prisma {
     password: 'password',
     role: 'role',
     createdAt: 'createdAt',
+    isActive: 'isActive',
     updatedAt: 'updatedAt'
   };
 
@@ -4198,6 +4222,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'UserActive'
+   */
+  export type EnumUserActiveFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserActive'>
+    
+
+
+  /**
+   * Reference to a field of type 'UserActive[]'
+   */
+  export type ListEnumUserActiveFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserActive[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -4252,6 +4290,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     createdAt?: DateTimeFilter<"User"> | Date | string
+    isActive?: EnumUserActiveFilter<"User"> | $Enums.UserActive
     updatedAt?: DateTimeFilter<"User"> | Date | string
     Trip?: TripListRelationFilter
     travelBuddyRequest?: TravelBuddyRequestListRelationFilter
@@ -4264,6 +4303,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
+    isActive?: SortOrder
     updatedAt?: SortOrder
     Trip?: TripOrderByRelationAggregateInput
     travelBuddyRequest?: TravelBuddyRequestOrderByRelationAggregateInput
@@ -4279,6 +4319,7 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     createdAt?: DateTimeFilter<"User"> | Date | string
+    isActive?: EnumUserActiveFilter<"User"> | $Enums.UserActive
     updatedAt?: DateTimeFilter<"User"> | Date | string
     Trip?: TripListRelationFilter
     travelBuddyRequest?: TravelBuddyRequestListRelationFilter
@@ -4291,6 +4332,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
+    isActive?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
@@ -4307,6 +4349,7 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    isActive?: EnumUserActiveWithAggregatesFilter<"User"> | $Enums.UserActive
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
@@ -4460,6 +4503,7 @@ export namespace Prisma {
     password: string
     role?: $Enums.UserRole
     createdAt?: Date | string
+    isActive?: $Enums.UserActive
     updatedAt?: Date | string
     Trip?: TripCreateNestedManyWithoutUserInput
     travelBuddyRequest?: TravelBuddyRequestCreateNestedManyWithoutUserInput
@@ -4472,6 +4516,7 @@ export namespace Prisma {
     password: string
     role?: $Enums.UserRole
     createdAt?: Date | string
+    isActive?: $Enums.UserActive
     updatedAt?: Date | string
     Trip?: TripUncheckedCreateNestedManyWithoutUserInput
     travelBuddyRequest?: TravelBuddyRequestUncheckedCreateNestedManyWithoutUserInput
@@ -4484,6 +4529,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: EnumUserActiveFieldUpdateOperationsInput | $Enums.UserActive
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Trip?: TripUpdateManyWithoutUserNestedInput
     travelBuddyRequest?: TravelBuddyRequestUpdateManyWithoutUserNestedInput
@@ -4496,6 +4542,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: EnumUserActiveFieldUpdateOperationsInput | $Enums.UserActive
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Trip?: TripUncheckedUpdateManyWithoutUserNestedInput
     travelBuddyRequest?: TravelBuddyRequestUncheckedUpdateManyWithoutUserNestedInput
@@ -4508,6 +4555,7 @@ export namespace Prisma {
     password: string
     role?: $Enums.UserRole
     createdAt?: Date | string
+    isActive?: $Enums.UserActive
     updatedAt?: Date | string
   }
 
@@ -4518,6 +4566,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: EnumUserActiveFieldUpdateOperationsInput | $Enums.UserActive
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -4528,6 +4577,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: EnumUserActiveFieldUpdateOperationsInput | $Enums.UserActive
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -4712,6 +4762,13 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type EnumUserActiveFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserActive | EnumUserActiveFieldRefInput<$PrismaModel>
+    in?: $Enums.UserActive[] | ListEnumUserActiveFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserActive[] | ListEnumUserActiveFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserActiveFilter<$PrismaModel> | $Enums.UserActive
+  }
+
   export type TripListRelationFilter = {
     every?: TripWhereInput
     some?: TripWhereInput
@@ -4739,6 +4796,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
+    isActive?: SortOrder
     updatedAt?: SortOrder
   }
 
@@ -4749,6 +4807,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
+    isActive?: SortOrder
     updatedAt?: SortOrder
   }
 
@@ -4759,6 +4818,7 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
+    isActive?: SortOrder
     updatedAt?: SortOrder
   }
 
@@ -4802,6 +4862,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type EnumUserActiveWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserActive | EnumUserActiveFieldRefInput<$PrismaModel>
+    in?: $Enums.UserActive[] | ListEnumUserActiveFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserActive[] | ListEnumUserActiveFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserActiveWithAggregatesFilter<$PrismaModel> | $Enums.UserActive
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserActiveFilter<$PrismaModel>
+    _max?: NestedEnumUserActiveFilter<$PrismaModel>
   }
 
   export type StringNullableListFilter<$PrismaModel = never> = {
@@ -4973,6 +5043,10 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type EnumUserActiveFieldUpdateOperationsInput = {
+    set?: $Enums.UserActive
   }
 
   export type TripUpdateManyWithoutUserNestedInput = {
@@ -5168,6 +5242,13 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedEnumUserActiveFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserActive | EnumUserActiveFieldRefInput<$PrismaModel>
+    in?: $Enums.UserActive[] | ListEnumUserActiveFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserActive[] | ListEnumUserActiveFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserActiveFilter<$PrismaModel> | $Enums.UserActive
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -5218,6 +5299,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumUserActiveWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserActive | EnumUserActiveFieldRefInput<$PrismaModel>
+    in?: $Enums.UserActive[] | ListEnumUserActiveFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserActive[] | ListEnumUserActiveFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserActiveWithAggregatesFilter<$PrismaModel> | $Enums.UserActive
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserActiveFilter<$PrismaModel>
+    _max?: NestedEnumUserActiveFilter<$PrismaModel>
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -5390,6 +5481,7 @@ export namespace Prisma {
     password: string
     role?: $Enums.UserRole
     createdAt?: Date | string
+    isActive?: $Enums.UserActive
     updatedAt?: Date | string
     travelBuddyRequest?: TravelBuddyRequestCreateNestedManyWithoutUserInput
   }
@@ -5401,6 +5493,7 @@ export namespace Prisma {
     password: string
     role?: $Enums.UserRole
     createdAt?: Date | string
+    isActive?: $Enums.UserActive
     updatedAt?: Date | string
     travelBuddyRequest?: TravelBuddyRequestUncheckedCreateNestedManyWithoutUserInput
   }
@@ -5454,6 +5547,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: EnumUserActiveFieldUpdateOperationsInput | $Enums.UserActive
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     travelBuddyRequest?: TravelBuddyRequestUpdateManyWithoutUserNestedInput
   }
@@ -5465,6 +5559,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: EnumUserActiveFieldUpdateOperationsInput | $Enums.UserActive
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     travelBuddyRequest?: TravelBuddyRequestUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -5492,6 +5587,7 @@ export namespace Prisma {
     password: string
     role?: $Enums.UserRole
     createdAt?: Date | string
+    isActive?: $Enums.UserActive
     updatedAt?: Date | string
     Trip?: TripCreateNestedManyWithoutUserInput
   }
@@ -5503,6 +5599,7 @@ export namespace Prisma {
     password: string
     role?: $Enums.UserRole
     createdAt?: Date | string
+    isActive?: $Enums.UserActive
     updatedAt?: Date | string
     Trip?: TripUncheckedCreateNestedManyWithoutUserInput
   }
@@ -5559,6 +5656,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: EnumUserActiveFieldUpdateOperationsInput | $Enums.UserActive
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Trip?: TripUpdateManyWithoutUserNestedInput
   }
@@ -5570,6 +5668,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    isActive?: EnumUserActiveFieldUpdateOperationsInput | $Enums.UserActive
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     Trip?: TripUncheckedUpdateManyWithoutUserNestedInput
   }

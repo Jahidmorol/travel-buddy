@@ -126,6 +126,7 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   role: 'role',
   createdAt: 'createdAt',
+  isActive: 'isActive',
   updatedAt: 'updatedAt'
 };
 
@@ -162,6 +163,11 @@ exports.Prisma.QueryMode = {
 exports.UserRole = exports.$Enums.UserRole = {
   USER: 'USER',
   ADMIN: 'ADMIN'
+};
+
+exports.UserActive = exports.$Enums.UserActive = {
+  ACTIVATE: 'ACTIVATE',
+  DEACTIVATE: 'DEACTIVATE'
 };
 
 exports.TravelStatus = exports.$Enums.TravelStatus = {
