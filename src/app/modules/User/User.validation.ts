@@ -43,9 +43,18 @@ const changeUserPasswordValidation = z.object({
   }),
 });
 
+const userIsActiveValidation = z.object({
+  body: z.object({
+    isActive: z.enum(["ACTIVATE", "DEACTIVATE"], {
+      required_error: "Provide User ACTIVATE, Or DEACTIVATE!",
+    }),
+  }),
+});
+
 export const userValidation = {
   createUserValidation,
   loginUserValidation,
   updateUserValidation,
   changeUserPasswordValidation,
+  userIsActiveValidation,
 };

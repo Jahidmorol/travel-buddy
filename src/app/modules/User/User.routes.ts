@@ -15,4 +15,11 @@ router.post(
 
 router.get("/all-user", auth(UserRole.ADMIN), userController.getAllUser);
 
+router.patch(
+  "/update-usr-info/:id",
+  auth(UserRole.ADMIN),
+  validationRequest(userValidation.userIsActiveValidation),
+  userController.updateUserInfo
+);
+
 export const userRoute = router;

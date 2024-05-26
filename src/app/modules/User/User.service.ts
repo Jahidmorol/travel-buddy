@@ -68,7 +68,49 @@ const getAllUser = async (user: any) => {
   return result;
 };
 
+const updateUserInfo = async (user: any, payload: any, id: string) => {
+  const adminDetails = await prisma.user.findFirst({
+    where: {
+      id: user?.id,
+      role: user?.role,
+    },
+  });
+
+  if (!adminDetails) {
+    throw new ApiError(404, "Admin is not found!");
+  }
+
+  const userInfo = await prisma.user.findFirstOrThrow({
+    where: {
+      id,
+    },
+  });
+
+  if (!userInfo) {
+    throw new ApiError(404, "User is not found!");
+  }
+
+  const result = await prisma.user.update({
+    where: {
+      id,
+    },
+    data: payload,
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      role: true,
+      isActive: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  return result;
+};
+
 export const userService = {
   createUserIntoDB,
   getAllUser,
+  updateUserInfo,
 };
