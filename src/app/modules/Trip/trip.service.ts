@@ -88,6 +88,7 @@ const getAllFromDB = async (
     data: result,
   };
 };
+
 const createTrip = async (user: any, payload: any) => {
   await prisma.user.findUniqueOrThrow({
     where: {
@@ -102,6 +103,10 @@ const createTrip = async (user: any, payload: any) => {
       endDate: payload.endDate,
       activities: payload.activities,
       budget: payload.budget,
+      description: payload.description,
+      image: payload.image,
+      title: payload.title,
+      tripType: payload.tripType,
       userId: user.id,
     },
   });

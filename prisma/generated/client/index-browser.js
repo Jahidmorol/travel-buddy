@@ -133,7 +133,11 @@ exports.Prisma.UserScalarFieldEnum = {
 exports.Prisma.TripScalarFieldEnum = {
   id: 'id',
   destination: 'destination',
+  title: 'title',
+  image: 'image',
   startDate: 'startDate',
+  description: 'description',
+  tripType: 'tripType',
   endDate: 'endDate',
   activities: 'activities',
   budget: 'budget',

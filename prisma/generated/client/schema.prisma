@@ -33,7 +33,11 @@ model User {
 model Trip {
   id                 String               @id @default(uuid())
   destination        String
+  title              String
+  image              String
   startDate          String
+  description        String
+  tripType           String
   endDate            String
   activities         String[]
   budget             Int

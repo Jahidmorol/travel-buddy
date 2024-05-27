@@ -2,6 +2,8 @@ import express from "express";
 import { tripController } from "./trip.controller";
 import auth from "../../middlewares/auth";
 import { UserRole } from "../../../../prisma/generated/client";
+import validationRequest from "../../middlewares/ValidationRequest";
+import { tripValidation } from "./trip.validation";
 
 const router = express.Router();
 
@@ -13,7 +15,12 @@ router.get(
   tripController.travelBuddyGet
 );
 
-router.post("/trips", auth(UserRole.USER), tripController.createTrip);
+router.post(
+  "/trips",
+  auth(UserRole.USER),
+  validationRequest(tripValidation.createTripValidation),
+  tripController.createTrip
+);
 
 router.post(
   "/trip/:tripId/request",
