@@ -14,8 +14,6 @@ const getAllFromDB = async (
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelper.calculatePagination(options);
 
-  console.log("user service page", user);
-
   const andConditions: Prisma.TripWhereInput[] = [];
 
   const { searchTerm, ...filterData } = params;
@@ -92,6 +90,15 @@ const getAllFromDB = async (
     },
     data: result,
   };
+};
+
+const getSingleTripFromDB = async (id: string) => {
+  const result = await prisma.trip.findFirstOrThrow({
+    where: {
+      id,
+    },
+  });
+  return result;
 };
 
 const createTrip = async (user: any, payload: any) => {
@@ -211,4 +218,5 @@ export const tripService = {
   travelBuddyGet,
   getAllFromDB,
   travelBuddyRespond,
+  getSingleTripFromDB,
 };

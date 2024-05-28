@@ -45,6 +45,21 @@ const getAllFromDB = catchAsync(async (req: Request & { user?: any }, res) => {
   });
 });
 
+const getSingleTripFromDB = catchAsync(
+  async (req: Request & { user?: any }, res) => {
+    const { id } = req.params;
+
+    const result = await tripService.getSingleTripFromDB(id);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Single Trips retrieved successfully!",
+      data: result,
+    });
+  }
+);
+
 const travelBuddyRequest = catchAsync(
   async (req: Request & { user?: any }, res: Response) => {
     const user = req.user;
@@ -102,4 +117,5 @@ export const tripController = {
   travelBuddyGet,
   getAllFromDB,
   travelBuddyRespond,
+  getSingleTripFromDB,
 };

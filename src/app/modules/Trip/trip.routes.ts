@@ -10,6 +10,12 @@ const router = express.Router();
 router.get("/trips", auth(UserRole.USER), tripController.getAllFromDB);
 
 router.get(
+  "/trips/:id",
+  auth(UserRole.USER),
+  tripController.getSingleTripFromDB
+);
+
+router.get(
   "/travel-buddies/:tripId",
   auth(UserRole.USER),
   tripController.travelBuddyGet
