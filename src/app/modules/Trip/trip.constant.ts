@@ -1,4 +1,4 @@
-export const tripFilterAbleFieds = [
+export const tripFilterAbleFielders = [
   "destination",
   "startDate",
   "searchTerm",

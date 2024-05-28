@@ -8,20 +8,23 @@ import { Prisma, TravelStatus } from "../../../../prisma/generated/client";
 const getAllFromDB = async (
   params: ITripFilterRequest,
   options: IPaginationOptions,
-  filtersbudget: any
+  filtersBudget: { minBudget?: string; maxBudget?: string },
+  user: any
 ) => {
   const { page, limit, skip, sortBy, sortOrder } =
     paginationHelper.calculatePagination(options);
 
-  const andCondions: Prisma.TripWhereInput[] = [];
+  console.log("user service page", user);
+
+  const andConditions: Prisma.TripWhereInput[] = [];
 
   const { searchTerm, ...filterData } = params;
 
-  if (params.searchTerm) {
-    andCondions.push({
+  if (searchTerm) {
+    andConditions.push({
       OR: tripSearchAbleFields?.map((field) => ({
         [field]: {
-          contains: params.searchTerm,
+          contains: searchTerm,
           mode: "insensitive",
         },
       })),
@@ -29,7 +32,7 @@ const getAllFromDB = async (
   }
 
   if (Object.keys(filterData).length > 0) {
-    andCondions.push({
+    andConditions.push({
       AND: Object.keys(filterData).map((key) => ({
         [key]: {
           equals: (filterData as any)[key],
@@ -39,30 +42,32 @@ const getAllFromDB = async (
   }
 
   if (
-    filtersbudget.minBudget !== undefined &&
-    filtersbudget.maxBudget !== undefined
+    filtersBudget.minBudget !== undefined &&
+    filtersBudget.maxBudget !== undefined
   ) {
-    andCondions.push({
+    andConditions.push({
       AND: [
         {
           budget: {
-            gte: parseInt(filtersbudget.minBudget),
+            gte: parseInt(filtersBudget.minBudget, 10),
           },
         },
-
         {
           budget: {
-            lte: parseInt(filtersbudget.maxBudget),
+            lte: parseInt(filtersBudget.maxBudget, 10),
           },
         },
       ],
     });
   }
 
-  const whereConditon: Prisma.TripWhereInput = { AND: andCondions };
+  const whereCondition: Prisma.TripWhereInput = {
+    AND: andConditions,
+    userId: user?.id,
+  };
 
   const result = await prisma.trip.findMany({
-    where: whereConditon,
+    where: whereCondition,
     skip,
     take: limit,
     orderBy:
@@ -76,7 +81,7 @@ const getAllFromDB = async (
   });
 
   const total = await prisma.trip.count({
-    where: whereConditon,
+    where: whereCondition,
   });
 
   return {

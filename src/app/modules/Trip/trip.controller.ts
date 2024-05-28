@@ -4,7 +4,7 @@ import catchAsync from "../../../shared/catchAsync";
 import sendResponse from "../../../shared/sendResponse";
 import { tripService } from "./trip.service";
 import pick from "../../../shared/pick";
-import { tripFilterAbleFieds } from "./trip.constant";
+import { tripFilterAbleFielders } from "./trip.constant";
 
 const createTrip = catchAsync(
   async (req: Request & { user?: any }, res: Response) => {
@@ -21,17 +21,20 @@ const createTrip = catchAsync(
   }
 );
 
-const getAllFromDB = catchAsync(async (req, res) => {
-  const filters = pick(req.query, tripFilterAbleFieds);
+const getAllFromDB = catchAsync(async (req: Request & { user?: any }, res) => {
+  const filters = pick(req.query, tripFilterAbleFielders);
 
-  const filtersbudget = pick(req.query, ["minBudget", "maxBudget"]);
+  const user = req.user;
+
+  const filtersBudget = pick(req.query, ["minBudget", "maxBudget"]);
 
   const options = pick(req.query, ["limit", "page", "sortBy", "sortOrder"]);
 
   const result = await tripService.getAllFromDB(
     filters,
     options,
-    filtersbudget
+    filtersBudget,
+    user
   );
 
   sendResponse(res, {
