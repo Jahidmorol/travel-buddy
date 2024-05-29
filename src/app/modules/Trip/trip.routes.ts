@@ -7,7 +7,9 @@ import { tripValidation } from "./trip.validation";
 
 const router = express.Router();
 
-router.get("/trips", auth(UserRole.USER), tripController.getAllFromDB);
+router.get("/my-trips", auth(UserRole.USER), tripController.getAllMyTripFromDB);
+
+router.get("/trips", tripController.getAllFromDB);
 
 router.get(
   "/trips/:id",

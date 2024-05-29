@@ -8,6 +8,91 @@ import { Prisma, TravelStatus } from "../../../../prisma/generated/client";
 const getAllFromDB = async (
   params: ITripFilterRequest,
   options: IPaginationOptions,
+  filtersBudget: { minBudget?: string; maxBudget?: string }
+) => {
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelper.calculatePagination(options);
+
+  const andConditions: Prisma.TripWhereInput[] = [];
+
+  const { searchTerm, ...filterData } = params;
+
+  if (searchTerm) {
+    andConditions.push({
+      OR: tripSearchAbleFields?.map((field) => ({
+        [field]: {
+          contains: searchTerm,
+          mode: "insensitive",
+        },
+      })),
+    });
+  }
+
+  if (Object.keys(filterData).length > 0) {
+    andConditions.push({
+      AND: Object.keys(filterData).map((key) => ({
+        [key]: {
+          equals: (filterData as any)[key],
+        },
+      })),
+    });
+  }
+
+  if (
+    filtersBudget.minBudget !== undefined &&
+    filtersBudget.maxBudget !== undefined
+  ) {
+    andConditions.push({
+      AND: [
+        {
+          budget: {
+            gte: parseInt(filtersBudget.minBudget, 10),
+          },
+        },
+        {
+          budget: {
+            lte: parseInt(filtersBudget.maxBudget, 10),
+          },
+        },
+      ],
+    });
+  }
+
+  const whereCondition: Prisma.TripWhereInput = {
+    AND: andConditions,
+  };
+
+  const result = await prisma.trip.findMany({
+    where: whereCondition,
+    skip,
+    take: limit,
+    orderBy:
+      sortBy && sortOrder
+        ? {
+            [sortBy]: sortOrder,
+          }
+        : {
+            createdAt: "desc",
+          },
+  });
+
+  const total = await prisma.trip.count({
+    where: whereCondition,
+  });
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  };
+};
+
+const getAllMyTripFromDB = async (
+  params: ITripFilterRequest,
+  options: IPaginationOptions,
   filtersBudget: { minBudget?: string; maxBudget?: string },
   user: any
 ) => {
@@ -219,4 +304,5 @@ export const tripService = {
   getAllFromDB,
   travelBuddyRespond,
   getSingleTripFromDB,
+  getAllMyTripFromDB,
 };
