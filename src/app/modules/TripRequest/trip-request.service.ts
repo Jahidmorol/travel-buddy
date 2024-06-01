@@ -1,11 +1,12 @@
 import { prisma } from "../../../shared/prisma";
 
-import { TravelStatus } from "../../../../prisma/generated/client";
+import { TravelStatus, UserActive } from "../../../../prisma/generated/client";
 
 const travelBuddyRequest = async (user: any, tripId: string) => {
   await prisma.user.findUniqueOrThrow({
     where: {
       id: user.id,
+      isActive: UserActive.ACTIVATE,
     },
   });
 
@@ -26,24 +27,17 @@ const travelBuddyRequest = async (user: any, tripId: string) => {
   return createTrip;
 };
 
-const travelBuddyGet = async (user: any, tripId: string) => {
+const getAllTravelBuddyRequest = async (user: any) => {
   const userData = await prisma.user.findUniqueOrThrow({
     where: {
       id: user.id,
+      isActive: UserActive.ACTIVATE,
     },
   });
 
-  // const tripData = await prisma.trip.findUniqueOrThrow({
-  //   where: {
-  //     id: tripId,
-  //   },
-  // });
-
-  // console.log(tripData);
-
-  const tripBuddyData = await prisma.travelBuddyRequest.findMany({
+  const tripRequestData = await prisma.travelBuddyRequest.findMany({
     where: {
-      tripId,
+      userId: userData?.id,
     },
     select: {
       id: true,
@@ -59,10 +53,23 @@ const travelBuddyGet = async (user: any, tripId: string) => {
           email: true,
         },
       },
+      trip: {
+        select: {
+          title: true,
+          description: true,
+          budget: true,
+          endDate: true,
+          startDate: true,
+        },
+      },
     },
   });
 
-  return tripBuddyData;
+  console.log(userData);
+
+  console.log(tripRequestData);
+
+  return tripRequestData;
 };
 
 const travelBuddyRespond = async (user: any, buddyId: string, data: any) => {
@@ -90,7 +97,7 @@ const travelBuddyRespond = async (user: any, buddyId: string, data: any) => {
 
 export const tripRequestService = {
   travelBuddyRequest,
-  travelBuddyGet,
+  getAllTravelBuddyRequest,
 
   travelBuddyRespond,
 };

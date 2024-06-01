@@ -20,12 +20,11 @@ const travelBuddyRequest = catchAsync(
   }
 );
 
-const travelBuddyGet = catchAsync(
+const getAllTravelBuddyRequest = catchAsync(
   async (req: Request & { user?: any }, res: Response) => {
     const user = req.user;
-    const { tripId } = req.params;
 
-    const result = await tripRequestService.travelBuddyGet(user, tripId);
+    const result = await tripRequestService.getAllTravelBuddyRequest(user);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -57,7 +56,6 @@ const travelBuddyRespond = catchAsync(
 );
 export const tripRequestController = {
   travelBuddyRequest,
-  travelBuddyGet,
-
+  getAllTravelBuddyRequest,
   travelBuddyRespond,
 };
