@@ -38,6 +38,7 @@ const getAllTravelBuddyRequest = async (user: any) => {
   const tripRequestData = await prisma.travelBuddyRequest.findMany({
     where: {
       userId: userData?.id,
+      status: TravelStatus.APPROVED,
     },
     select: {
       id: true,
@@ -65,17 +66,18 @@ const getAllTravelBuddyRequest = async (user: any) => {
     },
   });
 
-  console.log(userData);
-
-  console.log(tripRequestData);
-
   return tripRequestData;
 };
 
-const travelBuddyRespond = async (user: any, buddyId: string, data: any) => {
+const travelBuddyUpdateStatus = async (
+  user: any,
+  buddyId: string,
+  data: any
+) => {
   await prisma.user.findUniqueOrThrow({
     where: {
       id: user.id,
+      isActive: UserActive.ACTIVATE,
     },
   });
 
@@ -98,6 +100,5 @@ const travelBuddyRespond = async (user: any, buddyId: string, data: any) => {
 export const tripRequestService = {
   travelBuddyRequest,
   getAllTravelBuddyRequest,
-
-  travelBuddyRespond,
+  travelBuddyUpdateStatus,
 };

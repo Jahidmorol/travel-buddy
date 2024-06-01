@@ -35,12 +35,12 @@ const getAllTravelBuddyRequest = catchAsync(
   }
 );
 
-const travelBuddyRespond = catchAsync(
+const travelBuddyUpdateStatus = catchAsync(
   async (req: Request & { user?: any }, res: Response) => {
     const user = req.user;
     const { buddyId } = req.params;
 
-    const result = await tripRequestService.travelBuddyRespond(
+    const result = await tripRequestService.travelBuddyUpdateStatus(
       user,
       buddyId,
       req.body
@@ -57,5 +57,5 @@ const travelBuddyRespond = catchAsync(
 export const tripRequestController = {
   travelBuddyRequest,
   getAllTravelBuddyRequest,
-  travelBuddyRespond,
+  travelBuddyUpdateStatus,
 };
