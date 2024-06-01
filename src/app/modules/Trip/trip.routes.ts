@@ -11,11 +11,7 @@ router.get("/my-trips", auth(UserRole.USER), tripController.getAllMyTripFromDB);
 
 router.get("/trips", tripController.getAllFromDB);
 
-router.get(
-  "/trips/:id",
-  auth(UserRole.USER),
-  tripController.getSingleTripFromDB
-);
+router.get("/trips/:id", tripController.getSingleTripFromDB);
 
 router.get(
   "/travel-buddies/:tripId",
