@@ -14,18 +14,24 @@ router.post(
   tripRequestController.travelBuddyRequest
 );
 
+router.get(
+  "/user",
+  auth(UserRole.USER),
+  tripRequestController.getAllTravelBuddyRequestUser
+);
+
+router.get(
+  "/admin",
+  auth(UserRole.ADMIN),
+  tripRequestController.getAllTravelBuddyRequestAdmin
+);
+
 router.put(
   "/update-status/:buddyId",
   auth(UserRole.ADMIN),
   validationRequest(tripRequestValidation.tripRequestStatusValidation),
 
   tripRequestController.travelBuddyUpdateStatus
-);
-
-router.get(
-  "/",
-  auth(UserRole.USER),
-  tripRequestController.getAllTravelBuddyRequest
 );
 
 // router.put(

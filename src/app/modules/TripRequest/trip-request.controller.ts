@@ -20,11 +20,25 @@ const travelBuddyRequest = catchAsync(
   }
 );
 
-const getAllTravelBuddyRequest = catchAsync(
+const getAllTravelBuddyRequestUser = catchAsync(
   async (req: Request & { user?: any }, res: Response) => {
     const user = req.user;
 
-    const result = await tripRequestService.getAllTravelBuddyRequest(user);
+    const result = await tripRequestService.getAllTravelBuddyRequestUser(user);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Potential travel buddies retrieved successfully",
+      data: result,
+    });
+  }
+);
+const getAllTravelBuddyRequestAdmin = catchAsync(
+  async (req: Request & { user?: any }, res: Response) => {
+    const user = req.user;
+
+    const result = await tripRequestService.getAllTravelBuddyRequestAdmin(user);
 
     sendResponse(res, {
       statusCode: httpStatus.OK,
@@ -56,6 +70,7 @@ const travelBuddyUpdateStatus = catchAsync(
 );
 export const tripRequestController = {
   travelBuddyRequest,
-  getAllTravelBuddyRequest,
+  getAllTravelBuddyRequestUser,
+  getAllTravelBuddyRequestAdmin,
   travelBuddyUpdateStatus,
 };

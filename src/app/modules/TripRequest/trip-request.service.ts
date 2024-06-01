@@ -27,7 +27,7 @@ const travelBuddyRequest = async (user: any, tripId: string) => {
   return createTrip;
 };
 
-const getAllTravelBuddyRequest = async (user: any) => {
+const getAllTravelBuddyRequestUser = async (user: any) => {
   const userData = await prisma.user.findUniqueOrThrow({
     where: {
       id: user.id,
@@ -40,6 +40,44 @@ const getAllTravelBuddyRequest = async (user: any) => {
       userId: userData?.id,
       status: TravelStatus.APPROVED,
     },
+    select: {
+      id: true,
+      tripId: true,
+      userId: true,
+      status: true,
+      createdAt: true,
+      updatedAt: true,
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
+      trip: {
+        select: {
+          title: true,
+          description: true,
+          budget: true,
+          endDate: true,
+          startDate: true,
+        },
+      },
+    },
+  });
+
+  return tripRequestData;
+};
+
+const getAllTravelBuddyRequestAdmin = async (user: any) => {
+  const userData = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: user.id,
+      isActive: UserActive.ACTIVATE,
+    },
+  });
+
+  const tripRequestData = await prisma.travelBuddyRequest.findMany({
     select: {
       id: true,
       tripId: true,
@@ -99,6 +137,7 @@ const travelBuddyUpdateStatus = async (
 
 export const tripRequestService = {
   travelBuddyRequest,
-  getAllTravelBuddyRequest,
+  getAllTravelBuddyRequestUser,
+  getAllTravelBuddyRequestAdmin,
   travelBuddyUpdateStatus,
 };
