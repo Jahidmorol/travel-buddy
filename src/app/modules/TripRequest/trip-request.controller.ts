@@ -9,11 +9,7 @@ const travelBuddyRequest = catchAsync(
     const user = req.user;
     const { tripId } = req.params;
 
-    const result = await tripRequestService.travelBuddyRequest(
-      user,
-      tripId,
-      req.body
-    );
+    const result = await tripRequestService.travelBuddyRequest(user, tripId);
 
     sendResponse(res, {
       statusCode: httpStatus.CREATED,

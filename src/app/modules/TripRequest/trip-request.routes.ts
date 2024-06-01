@@ -6,7 +6,11 @@ import { tripRequestController } from "./trip-request.controller";
 
 const router = express.Router();
 
-router.post("/", auth(UserRole.USER), tripRequestController.travelBuddyRequest);
+router.post(
+  "/:tripId",
+  auth(UserRole.USER),
+  tripRequestController.travelBuddyRequest
+);
 
 router.put(
   "/travel-buddies/:buddyId/respond",

@@ -2,7 +2,7 @@ import { prisma } from "../../../shared/prisma";
 
 import { TravelStatus } from "../../../../prisma/generated/client";
 
-const travelBuddyRequest = async (user: any, tripId: string, payload: any) => {
+const travelBuddyRequest = async (user: any, tripId: string) => {
   await prisma.user.findUniqueOrThrow({
     where: {
       id: user.id,
