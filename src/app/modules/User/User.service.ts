@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { prisma } from "../../../shared/prisma";
 import ApiError from "../../errors/ApiError";
+import { TravelStatus, UserActive } from "../../../../prisma/generated/client";
 
 const createUserIntoDB = async (payload: any) => {
   const hashedPassword: string = await bcrypt.hash(payload.password, 12);
@@ -66,6 +67,58 @@ const getAllUser = async (user: any) => {
     },
   });
   return result;
+};
+
+const getDashboardData = async (user: any) => {
+  const adminDetails = await prisma.user.findFirst({
+    where: {
+      id: user?.id,
+      role: user?.role,
+    },
+  });
+
+  if (!adminDetails) {
+    throw new ApiError(404, "Admin is not found!");
+  }
+  const totalTrip = await prisma.trip.count({});
+  const totalUser = await prisma.user.count({});
+  const totalActiveUser = await prisma.user.count({
+    where: {
+      isActive: UserActive.ACTIVATE,
+    },
+  });
+  const totalDeActiveUser = await prisma.user.count({
+    where: {
+      isActive: UserActive.DEACTIVATE,
+    },
+  });
+  const totalTripRequest = await prisma.travelBuddyRequest.count({});
+  const totalTripRequestPending = await prisma.travelBuddyRequest.count({
+    where: {
+      status: TravelStatus.PENDING,
+    },
+  });
+  const totalTripRequestApproved = await prisma.travelBuddyRequest.count({
+    where: {
+      status: TravelStatus.APPROVED,
+    },
+  });
+  const totalTripRequestRejected = await prisma.travelBuddyRequest.count({
+    where: {
+      status: TravelStatus.REJECTED,
+    },
+  });
+
+  return {
+    totalTrip,
+    totalUser,
+    totalActiveUser,
+    totalDeActiveUser,
+    totalTripRequest,
+    totalTripRequestPending,
+    totalTripRequestApproved,
+    totalTripRequestRejected,
+  };
 };
 
 const updateUserInfo = async (user: any, payload: any, id: string) => {
@@ -154,4 +207,5 @@ export const userService = {
   getAllUser,
   updateUserInfo,
   updateUserRole,
+  getDashboardData,
 };

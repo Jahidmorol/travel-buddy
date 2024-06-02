@@ -29,4 +29,10 @@ router.patch(
   userController.updateUserInfo
 );
 
+router.get(
+  "/dashboard-data",
+  auth(UserRole.ADMIN),
+  userController.getDashboardData
+);
+
 export const userRoute = router;
