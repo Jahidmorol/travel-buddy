@@ -2,7 +2,10 @@
 CREATE TYPE "TravelStatus" AS ENUM ('PENDING', 'APPROVED', 'REJECTED');
 
 -- CreateEnum
-CREATE TYPE "UserRole" AS ENUM ('USER');
+CREATE TYPE "UserRole" AS ENUM ('USER', 'ADMIN');
+
+-- CreateEnum
+CREATE TYPE "UserActive" AS ENUM ('ACTIVATE', 'DEACTIVATE');
 
 -- CreateTable
 CREATE TABLE "users" (
@@ -12,28 +15,21 @@ CREATE TABLE "users" (
     "password" TEXT NOT NULL,
     "role" "UserRole" NOT NULL DEFAULT 'USER',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "isActive" "UserActive" NOT NULL DEFAULT 'ACTIVATE',
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
-CREATE TABLE "userprofile" (
-    "id" TEXT NOT NULL,
-    "bio" TEXT NOT NULL,
-    "age" INTEGER NOT NULL,
-    "userId" TEXT NOT NULL,
-    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" TIMESTAMP(3) NOT NULL,
-
-    CONSTRAINT "userprofile_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "trip" (
     "id" TEXT NOT NULL,
     "destination" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
     "startDate" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "tripType" TEXT NOT NULL,
     "endDate" TEXT NOT NULL,
     "activities" TEXT[],
     "budget" INTEGER NOT NULL,
@@ -58,12 +54,6 @@ CREATE TABLE "travelbuddyrequest" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
-
--- CreateIndex
-CREATE UNIQUE INDEX "userprofile_userId_key" ON "userprofile"("userId");
-
--- AddForeignKey
-ALTER TABLE "userprofile" ADD CONSTRAINT "userprofile_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "trip" ADD CONSTRAINT "trip_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

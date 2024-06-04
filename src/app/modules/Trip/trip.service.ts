@@ -16,12 +16,23 @@ const getAllFromDB = async (
   const andConditions: Prisma.TripWhereInput[] = [];
 
   const { searchTerm, ...filterData } = params;
+  console.log("service", searchTerm);
 
-  if (searchTerm) {
+  // if (params?.searchTerm) {
+  //   andConditions.push({
+  //     // OR: tripSearchAbleFields?.map((field) => ({
+  //     destination: {
+  //       contains: params?.searchTerm,
+  //       mode: "insensitive",
+  //     },
+  //     // })),
+  //   });
+  // }
+  if (params?.searchTerm) {
     andConditions.push({
       OR: tripSearchAbleFields?.map((field) => ({
         [field]: {
-          contains: searchTerm,
+          contains: params?.searchTerm,
           mode: "insensitive",
         },
       })),
@@ -57,6 +68,8 @@ const getAllFromDB = async (
       ],
     });
   }
+
+  console.log("and conditon", andConditions);
 
   const whereCondition: Prisma.TripWhereInput = {
     AND: andConditions,
