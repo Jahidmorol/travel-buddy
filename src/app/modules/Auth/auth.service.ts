@@ -9,6 +9,7 @@ const loginUser = async (payload: { email: string; password: string }) => {
   const user = await prisma.user.findUniqueOrThrow({
     where: {
       email: payload.email,
+      isActive: "ACTIVATE",
     },
   });
 
@@ -18,7 +19,7 @@ const loginUser = async (payload: { email: string; password: string }) => {
   );
 
   if (!isCorrectPassword) {
-    throw new Error("password not match!");
+    throw new ApiError(404, "password not match!");
   }
 
   const accessToken = jwtHelpers.generateToken(
