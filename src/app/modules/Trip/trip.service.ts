@@ -310,6 +310,25 @@ const travelBuddyRespond = async (user: any, buddyId: string, data: any) => {
   return tripBuddyUpdateData;
 };
 
+const tripDelete = async (id: string) => {
+  const result = await prisma.$transaction(async (tc) => {
+    await tc.travelBuddyRequest.deleteMany({
+      where: {
+        tripId: id,
+      },
+    });
+
+    const tripDeletedData = await tc.trip.delete({
+      where: {
+        id,
+      },
+    });
+
+    return tripDeletedData;
+  });
+  return result;
+};
+
 export const tripService = {
   createTrip,
   travelBuddyRequest,
@@ -318,4 +337,5 @@ export const tripService = {
   travelBuddyRespond,
   getSingleTripFromDB,
   getAllMyTripFromDB,
+  tripDelete,
 };

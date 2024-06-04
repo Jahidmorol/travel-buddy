@@ -37,5 +37,10 @@ router.put(
   auth(UserRole.USER),
   tripController.travelBuddyRespond
 );
+router.delete(
+  "/delete-trip/:id",
+  auth(UserRole.ADMIN),
+  tripController.tripDelete
+);
 
 export const tripRouter = router;

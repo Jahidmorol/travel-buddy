@@ -134,6 +134,20 @@ const travelBuddyRespond = catchAsync(
     });
   }
 );
+
+const tripDelete = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  await tripService.tripDelete(id);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Travel Delete successfully",
+    data: null,
+  });
+});
+
 export const tripController = {
   createTrip,
   travelBuddyRequest,
@@ -142,4 +156,5 @@ export const tripController = {
   travelBuddyRespond,
   getSingleTripFromDB,
   getAllMyTripFromDB,
+  tripDelete,
 };
