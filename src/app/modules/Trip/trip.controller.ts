@@ -21,6 +21,22 @@ const createTrip = catchAsync(
   }
 );
 
+const updateTrip = catchAsync(
+  async (req: Request & { user?: any }, res: Response) => {
+    const user = req.user;
+    const { id } = req.params;
+
+    const result = await tripService.updateTrip(user, req.body, id);
+
+    sendResponse(res, {
+      statusCode: 201,
+      success: true,
+      message: "Trip update successfully",
+      data: result,
+    });
+  }
+);
+
 const getAllFromDB = catchAsync(async (req: Request & { user?: any }, res) => {
   const filters = pick(req.query, tripFilterAbleFielders);
 
@@ -157,4 +173,5 @@ export const tripController = {
   getSingleTripFromDB,
   getAllMyTripFromDB,
   tripDelete,
+  updateTrip,
 };

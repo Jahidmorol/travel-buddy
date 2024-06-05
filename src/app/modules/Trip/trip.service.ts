@@ -16,7 +16,6 @@ const getAllFromDB = async (
   const andConditions: Prisma.TripWhereInput[] = [];
 
   const { searchTerm, ...filterData } = params;
-  console.log("service", searchTerm);
 
   // if (params?.searchTerm) {
   //   andConditions.push({
@@ -68,8 +67,6 @@ const getAllFromDB = async (
       ],
     });
   }
-
-  console.log("and conditon", andConditions);
 
   const whereCondition: Prisma.TripWhereInput = {
     AND: andConditions,
@@ -224,6 +221,38 @@ const createTrip = async (user: any, payload: any) => {
   return createTrip;
 };
 
+const updateTrip = async (user: any, payload: any, id: string) => {
+  await prisma.user.findUnique({
+    where: {
+      id: user.id,
+    },
+  });
+
+  // const createTrip = await prisma.trip.create({
+  //   data: {
+  //     destination: payload.destination,
+  //     startDate: payload.startDate,
+  //     endDate: payload.endDate,
+  //     activities: payload.activities,
+  //     budget: payload.budget,
+  //     description: payload.description,
+  //     image: payload.image,
+  //     title: payload.title,
+  //     tripType: payload.tripType,
+  //     userId: user.id,
+  //   },
+  // });
+
+  const updateTripData = await prisma.trip.update({
+    where: {
+      id,
+    },
+    data: payload,
+  });
+
+  return updateTripData;
+};
+
 const travelBuddyRequest = async (user: any, tripId: string, payload: any) => {
   await prisma.user.findUniqueOrThrow({
     where: {
@@ -338,4 +367,5 @@ export const tripService = {
   getSingleTripFromDB,
   getAllMyTripFromDB,
   tripDelete,
+  updateTrip,
 };

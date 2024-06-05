@@ -26,6 +26,13 @@ router.post(
   tripController.createTrip
 );
 
+router.patch(
+  "/trips/:id",
+  auth(UserRole.USER, UserRole.ADMIN),
+  validationRequest(tripValidation.updateTripValidation),
+  tripController.updateTrip
+);
+
 router.post(
   "/trip/:tripId/request",
   auth(UserRole.USER),
@@ -37,9 +44,10 @@ router.put(
   auth(UserRole.USER),
   tripController.travelBuddyRespond
 );
+
 router.delete(
   "/delete-trip/:id",
-  auth(UserRole.ADMIN),
+  auth(UserRole.USER, UserRole.ADMIN),
   tripController.tripDelete
 );
 
