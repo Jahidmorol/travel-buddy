@@ -317,26 +317,28 @@ const travelBuddyGet = async (user: any, tripId: string) => {
 };
 
 const travelBuddyRespond = async (user: any, buddyId: string, data: any) => {
-  await prisma.user.findUniqueOrThrow({
-    where: {
-      id: user.id,
-    },
-  });
+  console.log({ user, buddyId, data });
+  // await prisma.user.findUniqueOrThrow({
+  //   where: {
+  //     id: user.id,
+  //   },
+  // });
 
-  await prisma.travelBuddyRequest.findUniqueOrThrow({
-    where: { id: buddyId },
-  });
+  // await prisma.travelBuddyRequest.findUniqueOrThrow({
+  //   where: { id: buddyId },
+  // });
 
-  const tripBuddyUpdateData = await prisma.travelBuddyRequest.update({
-    where: {
-      id: buddyId,
-    },
-    data: {
-      status: data.status,
-    },
-  });
+  // const tripBuddyUpdateData = await prisma.travelBuddyRequest.update({
+  //   where: {
+  //     id: buddyId,
+  //   },
+  //   data: {
+  //     status: data.status,
+  //   },
+  // });
 
-  return tripBuddyUpdateData;
+  // return tripBuddyUpdateData;
+  return null;
 };
 
 const tripDelete = async (id: string) => {

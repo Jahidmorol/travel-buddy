@@ -1,6 +1,7 @@
 import { prisma } from "../../../shared/prisma";
 
 import { TravelStatus, UserActive } from "../../../../prisma/generated/client";
+import ApiError from "../../errors/ApiError";
 
 const travelBuddyRequest = async (user: any, tripId: string) => {
   await prisma.user.findUniqueOrThrow({
@@ -112,25 +113,51 @@ const travelBuddyUpdateStatus = async (
   buddyId: string,
   data: any
 ) => {
-  await prisma.user.findUniqueOrThrow({
+  const userData = await prisma.user.findUnique({
     where: {
       id: user.id,
       isActive: UserActive.ACTIVATE,
     },
   });
 
-  await prisma.travelBuddyRequest.findUniqueOrThrow({
+  if (!userData) {
+    throw new ApiError(404, "User not found!");
+  }
+
+  const buddyData = await prisma.travelBuddyRequest.findUnique({
     where: { id: buddyId },
+    include: {
+      trip: true,
+    },
   });
 
-  const tripBuddyUpdateData = await prisma.travelBuddyRequest.update({
-    where: {
-      id: buddyId,
-    },
-    data: {
-      status: data.status,
-    },
-  });
+  if (!buddyData) {
+    throw new ApiError(404, "Trip request not found!");
+  }
+
+  let tripBuddyUpdateData;
+
+  if (buddyData.trip.userId === user.id) {
+    tripBuddyUpdateData = await prisma.travelBuddyRequest.update({
+      where: {
+        id: buddyId,
+      },
+      data: {
+        status: data.status,
+      },
+    });
+  } else {
+    throw new ApiError(404, "This not you post request");
+  }
+
+  // const tripBuddyUpdateData = await prisma.travelBuddyRequest.update({
+  //   where: {
+  //     id: buddyId,
+  //   },
+  //   data: {
+  //     status: data.status,
+  //   },
+  // });
 
   return tripBuddyUpdateData;
 };

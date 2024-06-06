@@ -28,7 +28,7 @@ router.get(
 
 router.put(
   "/update-status/:buddyId",
-  auth(UserRole.ADMIN),
+  auth(UserRole.ADMIN, UserRole.USER),
   validationRequest(tripRequestValidation.tripRequestStatusValidation),
 
   tripRequestController.travelBuddyUpdateStatus
