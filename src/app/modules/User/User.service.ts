@@ -2,6 +2,8 @@ import bcrypt from "bcrypt";
 import { prisma } from "../../../shared/prisma";
 import ApiError from "../../errors/ApiError";
 import { TravelStatus, UserActive } from "../../../../prisma/generated/client";
+import { IPaginationOptions } from "../../interfaces/pagination";
+import { paginationHelper } from "../../../helpers/paginationHelper";
 
 const createUserIntoDB = async (payload: any) => {
   const hashedPassword: string = await bcrypt.hash(payload.password, 12);
@@ -43,7 +45,9 @@ const createUserIntoDB = async (payload: any) => {
   return result;
 };
 
-const getAllUser = async (user: any) => {
+const getAllUser = async (user: any, options: IPaginationOptions) => {
+  const { page, limit, skip } = paginationHelper.calculatePagination(options);
+
   const adminDetails = await prisma.user.findFirst({
     where: {
       id: user?.id,
@@ -65,8 +69,20 @@ const getAllUser = async (user: any) => {
       createdAt: true,
       updatedAt: true,
     },
+    skip,
+    take: limit,
   });
-  return result;
+
+  const total = await prisma.user.count({});
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: result,
+  };
 };
 
 const getDashboardData = async (user: any) => {

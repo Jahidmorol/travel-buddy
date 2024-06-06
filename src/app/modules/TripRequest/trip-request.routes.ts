@@ -21,9 +21,9 @@ router.get(
 );
 
 router.get(
-  "/admin",
-  auth(UserRole.ADMIN),
-  tripRequestController.getAllTravelBuddyRequestAdmin
+  "/all-travel-request",
+  auth(UserRole.ADMIN, UserRole.USER),
+  tripRequestController.getAllTravelBuddyRequest
 );
 
 router.put(
@@ -33,11 +33,5 @@ router.put(
 
   tripRequestController.travelBuddyUpdateStatus
 );
-
-// router.put(
-//   "/travel-buddies/:buddyId/respond",
-//   auth(UserRole.USER),
-//   tripRequestController.travelBuddyRespond
-// );
 
 export const tripRequestRouter = router;

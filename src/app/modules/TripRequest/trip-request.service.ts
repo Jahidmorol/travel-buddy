@@ -2,6 +2,8 @@ import { prisma } from "../../../shared/prisma";
 
 import { TravelStatus, UserActive } from "../../../../prisma/generated/client";
 import ApiError from "../../errors/ApiError";
+import { paginationHelper } from "../../../helpers/paginationHelper";
+import { IPaginationOptions } from "../../interfaces/pagination";
 
 const travelBuddyRequest = async (user: any, tripId: string) => {
   await prisma.user.findUniqueOrThrow({
@@ -28,7 +30,12 @@ const travelBuddyRequest = async (user: any, tripId: string) => {
   return createTrip;
 };
 
-const getAllTravelBuddyRequestUser = async (user: any) => {
+const getAllTravelBuddyRequestUser = async (
+  user: any,
+  options: IPaginationOptions
+) => {
+  const { page, limit, skip } = paginationHelper.calculatePagination(options);
+
   const userData = await prisma.user.findUniqueOrThrow({
     where: {
       id: user.id,
@@ -39,7 +46,6 @@ const getAllTravelBuddyRequestUser = async (user: any) => {
   const tripRequestData = await prisma.travelBuddyRequest.findMany({
     where: {
       userId: userData?.id,
-      status: TravelStatus.APPROVED,
     },
     select: {
       id: true,
@@ -59,18 +65,39 @@ const getAllTravelBuddyRequestUser = async (user: any) => {
         select: {
           title: true,
           description: true,
+          destination: true,
           budget: true,
           endDate: true,
           startDate: true,
         },
       },
     },
+    skip,
+    take: limit,
   });
 
-  return tripRequestData;
+  const total = await prisma.travelBuddyRequest.count({
+    where: {
+      userId: userData?.id,
+    },
+  });
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+    },
+    data: tripRequestData,
+  };
 };
 
-const getAllTravelBuddyRequestAdmin = async (user: any) => {
+const getAllTravelBuddyRequest = async (
+  user: any,
+  options: IPaginationOptions
+) => {
+  const { page, limit, skip } = paginationHelper.calculatePagination(options);
+
   const userData = await prisma.user.findUniqueOrThrow({
     where: {
       id: user.id,
@@ -97,15 +124,30 @@ const getAllTravelBuddyRequestAdmin = async (user: any) => {
         select: {
           title: true,
           description: true,
+          destination: true,
           budget: true,
           endDate: true,
+          userId: true,
           startDate: true,
         },
       },
     },
+    skip,
+    take: limit,
   });
 
-  return tripRequestData;
+  const filteredTripRequestData = tripRequestData.filter(
+    (request) => request.trip.userId === userData.id
+  );
+
+  return {
+    meta: {
+      page,
+      limit,
+      total: filteredTripRequestData.length,
+    },
+    data: filteredTripRequestData,
+  };
 };
 
 const travelBuddyUpdateStatus = async (
@@ -150,21 +192,12 @@ const travelBuddyUpdateStatus = async (
     throw new ApiError(404, "This not you post request");
   }
 
-  // const tripBuddyUpdateData = await prisma.travelBuddyRequest.update({
-  //   where: {
-  //     id: buddyId,
-  //   },
-  //   data: {
-  //     status: data.status,
-  //   },
-  // });
-
   return tripBuddyUpdateData;
 };
 
 export const tripRequestService = {
   travelBuddyRequest,
   getAllTravelBuddyRequestUser,
-  getAllTravelBuddyRequestAdmin,
+  getAllTravelBuddyRequest,
   travelBuddyUpdateStatus,
 };
