@@ -1,8 +1,8 @@
-# Travel Buddy Matching Application
+# Travel Buddy Application
 
 ## Overview
 
-The Travel Buddy Matching Application is a web service that allows users to find travel buddies for their trips. Users can register, create trips, send and respond to travel buddy requests, and manage their profiles. The application is built using TypeScript, Express.js, Prisma with PostgreSQL, and JWT for authentication.
+The Travel Buddy Application is a web service that allows users to find travel buddies for their trips. Users can register, create trips, send and respond to travel buddy requests, and manage their profiles. The application is built using TypeScript, Express.js, Prisma with PostgreSQL, and JWT for authentication.
 
 ## Setup Instructions
 
@@ -11,19 +11,20 @@ The Travel Buddy Matching Application is a web service that allows users to find
 - Node.js installed on your machine.
 - PostgreSQL installed and running on your local system.
 - Prisma CLI installed globally (`npm install -g prisma`).
+- vercel live link : https://trave-buddy-server.vercel.app
 
 ### Setup Steps
 
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/Porgramming-Hero-web-course/l2-b2-fullstack-track-assignment-8-mehedihasan8.git
+   git clone https://github.com/mehedihasan8/trip-buddy-server.git
    ```
 
 2. **Navigate to the project directory:**
 
    ```bash
-   l2-b2-fullstack-track-assignment-8-mehedihasan8.git
+   trip-buddy-server
    ```
 
 3. **Install dependencies:**
@@ -51,20 +52,20 @@ The Travel Buddy Matching Application is a web service that allows users to find
    npm run dev
    ```
 
-then access the API, make requests to `http://localhost:3000` your local server.
+then access the API, make requests to `http://localhost:5000` your local server.
 
 # API Endpoints
 
 ### User Registration
 
 - **Method:** `POST`
-- **URL:** `http://localhost:3000/api/register`
+- **URL:** `http://localhost:5000/api/register`
 - **Description:** User Registration
 
 ### User Login
 
 - **Method:** `POST`
-- **URL:** `http://localhost:3000/api/login`
+- **URL:** `http://localhost:5000/api/login`
 - **Description:** User Login
 
 # Create a Trip
@@ -72,13 +73,13 @@ then access the API, make requests to `http://localhost:3000` your local server.
 ### Create a trips
 
 - **Method:** `POST`
-- **URL:** `http://localhost:3000/api/trips`
+- **URL:** `http://localhost:5000/api/trips`
 - **Description:** Create a trips
 
 ### Get Paginated and Filtered Trips
 
 - **Method:** `GET`
-- **URL:** `http://localhost:3000/api/trips`
+- **URL:** `http://localhost:5000/api/trips`
 
   - `destination`: (Optional) Filter trips by destination.
   - `startDate`: (Optional) Filter trips by start date.
@@ -93,35 +94,35 @@ then access the API, make requests to `http://localhost:3000` your local server.
 ### Send Travel Buddy Request
 
 - **Method:** `POST`
-- **URL:** `http://localhost:3000/api/trip/:tripId/request`
+- **URL:** `http://localhost:5000/api/trip/:tripId/request`
 - **Request Headers:**
   - `Authorization: <JWT_TOKEN>`
 
 ### Get Potential Travel Buddies For a Specific Trip
 
 - **Method:** `GET`
-- **URL:** `http://localhost:3000/api/travel-buddies/:tripId`
+- **URL:** `http://localhost:5000/api/travel-buddies/:tripId`
 - **Request Headers:**
   - `Authorization: <JWT_TOKEN>`
 
 ### Respond to Travel Buddy Request
 
 - **Method:** `PUT`
-- **URL:** `http://localhost:3000/api/travel-buddies/:buddyId/respond`
+- **URL:** `http://localhost:5000/api/travel-buddies/:buddyId/respond`
 - **Request Headers:**
   - `Authorization: <JWT_TOKEN>`
 
 ### Get User Profile
 
 - **Method:** `GET`
-- **URL:** `http://localhost:3000/api/profile`
+- **URL:** `http://localhost:5000/api/profile`
 - **Request Headers:**
   - `Authorization: <JWT_TOKEN>`
 
 ### Update User Profile
 
 - **Method:** `PUT`
-- **URL:** `http://localhost:3000/api/profile`
+- **URL:** `http://localhost:5000/api/profile`
 - **Request Headers:**
   - `Authorization: <JWT_TOKEN>`
 
