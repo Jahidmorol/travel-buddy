@@ -164,7 +164,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "E:\\DDrive\\Level-2\\Full-Stack\\Assignment-9\\trave-buddy-server\\prisma\\generated\\client",
+      "value": "D:\\Projects\\trip-buddy-server\\prisma\\generated\\client",
       "fromEnvVar": null
     },
     "config": {
@@ -181,8 +181,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../.env",
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../..",
   "clientVersion": "5.11.0",
@@ -191,6 +190,7 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -199,8 +199,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated/client\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id        String     @id @default(uuid())\n  name      String\n  email     String     @unique\n  password  String\n  role      UserRole   @default(USER)\n  createdAt DateTime   @default(now())\n  isActive  UserActive @default(ACTIVATE)\n  updatedAt DateTime   @updatedAt\n\n  Trip               Trip[]\n  travelBuddyRequest TravelBuddyRequest[]\n\n  @@map(\"users\")\n}\n\nmodel Trip {\n  id                 String               @id @default(uuid())\n  destination        String\n  title              String\n  image              String\n  startDate          String\n  description        String\n  tripType           String\n  endDate            String\n  activities         String[]\n  budget             Int\n  userId             String\n  user               User                 @relation(fields: [userId], references: [id])\n  createdAt          DateTime             @default(now())\n  updatedAt          DateTime             @updatedAt\n  travelBuddyRequest TravelBuddyRequest[]\n\n  @@map(\"trip\")\n}\n\nmodel TravelBuddyRequest {\n  id     String @id @default(uuid())\n  userId String\n  user   User   @relation(fields: [userId], references: [id])\n\n  tripId String\n  trip   Trip   @relation(fields: [tripId], references: [id])\n\n  status TravelStatus @default(PENDING)\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@map(\"travelbuddyrequest\")\n}\n\nenum TravelStatus {\n  PENDING\n  APPROVED\n  REJECTED\n}\n\nenum UserRole {\n  USER\n  ADMIN\n}\n\nenum UserActive {\n  ACTIVATE\n  DEACTIVATE\n}\n",
-  "inlineSchemaHash": "70a7ca6b17cf217fab21605dfd5b89bd533fdf0a067a4cef226d8799ac1c9200",
+  "inlineSchema": "// This is your Prisma schema file,\r\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\r\n\r\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\r\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\r\n\r\ngenerator client {\r\n  provider = \"prisma-client-js\"\r\n  output   = \"./generated/client\"\r\n}\r\n\r\ndatasource db {\r\n  provider = \"postgresql\"\r\n  url      = env(\"DATABASE_URL\")\r\n}\r\n\r\nmodel User {\r\n  id        String     @id @default(uuid())\r\n  name      String\r\n  email     String     @unique\r\n  password  String\r\n  role      UserRole   @default(USER)\r\n  createdAt DateTime   @default(now())\r\n  isActive  UserActive @default(ACTIVATE)\r\n  updatedAt DateTime   @updatedAt\r\n\r\n  Trip               Trip[]\r\n  travelBuddyRequest TravelBuddyRequest[]\r\n\r\n  @@map(\"users\")\r\n}\r\n\r\nmodel Trip {\r\n  id                 String               @id @default(uuid())\r\n  destination        String\r\n  title              String\r\n  image              String\r\n  startDate          String\r\n  description        String\r\n  tripType           String\r\n  endDate            String\r\n  activities         String[]\r\n  budget             Int\r\n  userId             String\r\n  user               User                 @relation(fields: [userId], references: [id])\r\n  createdAt          DateTime             @default(now())\r\n  updatedAt          DateTime             @updatedAt\r\n  travelBuddyRequest TravelBuddyRequest[]\r\n\r\n  @@map(\"trip\")\r\n}\r\n\r\nmodel TravelBuddyRequest {\r\n  id     String @id @default(uuid())\r\n  userId String\r\n  user   User   @relation(fields: [userId], references: [id])\r\n\r\n  tripId String\r\n  trip   Trip   @relation(fields: [tripId], references: [id])\r\n\r\n  status TravelStatus @default(PENDING)\r\n\r\n  createdAt DateTime @default(now())\r\n  updatedAt DateTime @updatedAt\r\n\r\n  @@map(\"travelbuddyrequest\")\r\n}\r\n\r\nenum TravelStatus {\r\n  PENDING\r\n  APPROVED\r\n  REJECTED\r\n}\r\n\r\nenum UserRole {\r\n  USER\r\n  ADMIN\r\n}\r\n\r\nenum UserActive {\r\n  ACTIVATE\r\n  DEACTIVATE\r\n}\r\n",
+  "inlineSchemaHash": "f886da7bc90f5bcd09d8c128ed1eb192752a65edca465cfe6af68bf06c18ec5f",
   "copyEngine": true
 }
 config.dirname = '/'
